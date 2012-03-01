@@ -83,7 +83,7 @@
     
     //archive object
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self];
-    [data writeToFile:filePath atomically:YES];
+    [data writeToFile:filePath atomically:useAuxiliaryFile];
 }
 
 - (NSArray *)codableKeys
