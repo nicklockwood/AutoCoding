@@ -1,7 +1,7 @@
 //
 //  NSObject+AutoCoding.m
 //
-//  Version 1.0
+//  Version 1.1
 //
 //  Created by Nick Lockwood on 19/11/2011.
 //  Copyright (c) 2011 Charcoal Design
@@ -83,7 +83,7 @@
     
     //archive object
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self];
-    [data writeToFile:filePath atomically:YES];
+    [data writeToFile:filePath atomically:useAuxiliaryFile];
 }
 
 - (NSArray *)codableKeys
@@ -143,6 +143,17 @@
         id object = [self valueForKey:key];
         [aCoder encodeObject:object forKey:key];
     }
+}
+
+- (id)copyWithZone:(NSZone *)zone
+{
+    NSObject *copy = [[[self class] allocWithZone:zone] init];
+    for (NSString *key in [self codableKeys])
+    {
+        id object = [self valueForKey:key];
+        [copy setValue:object forKey:key];
+    }
+    return copy;
 }
 
 @end
