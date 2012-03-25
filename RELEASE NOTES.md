@@ -1,3 +1,8 @@
+Version 1.1.1
+
+- Read-only properties are now excluded from codableKeys
+- Added unit tests
+
 Version 1.1
 
 - Added automatic NSCopying implementation

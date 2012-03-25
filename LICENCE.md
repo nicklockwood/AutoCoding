@@ -1,6 +1,6 @@
 AutoCoding
 
-Version 1.1, March 1st, 2012
+Version 1.1.1, March 25th, 2012
 
 Copyright (C) 2011 Charcoal Design
 
