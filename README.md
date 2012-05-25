@@ -13,7 +13,7 @@ AutoCoding is also designed to work hand-in-hand with the BaseModel library (htt
 Supported OS & SDK Versions
 -----------------------------
 
-* Supported build target - iOS 5.0 / Mac OS 10.7 (Xcode 4.2, Apple LLVM compiler 3.0)
+* Supported build target - iOS 5.1 / Mac OS 10.7 (Xcode 4.3.2, Apple LLVM compiler 3.1)
 * Earliest supported deployment target - iOS 4.3 / Mac OS 10.6
 * Earliest compatible deployment target - iOS 3.0 / Mac OS 10.6
 
@@ -51,7 +51,7 @@ This method returns an array containing the names of all the properties of the o
 
 This method can be used to exclude certain properties from automatic coding without having to override or re-implement the `codableKeys` method. The default return value of this method is nil. Implement the method and return an array containing the names of any properties you wish to exclude from coding or copying.
 
-	+ (id)objectWithContentsOfFile:(NSString *)path;
+	+ (instancetype)objectWithContentsOfFile:(NSString *)path;
 	
 This attempts to load the file using the following sequence: 1) If the file is an NSCoded archive, load the root object and return it, 2) If the file is an ordinary Plist, load and return the root object, 3) Return the raw data as an NSData object. If the de-serialised object is not a subclass of the class being used to load it, an exception will be thrown (to avoid this, call the method on `NSObject` instead of a specific subclass).
 	

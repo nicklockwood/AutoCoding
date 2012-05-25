@@ -1,7 +1,7 @@
 //
 //  NSObject+AutoCoding.m
 //
-//  Version 1.1.1
+//  Version 1.1.2
 //
 //  Created by Nick Lockwood on 19/11/2011.
 //  Copyright (c) 2011 Charcoal Design
@@ -36,7 +36,7 @@
 
 @implementation NSObject (AutoCoding)
 
-+ (id)objectWithContentsOfFile:(NSString *)filePath
++ (instancetype)objectWithContentsOfFile:(NSString *)filePath
 {   
     //load the file
     NSData *data = [NSData dataWithContentsOfFile:filePath];
@@ -133,7 +133,7 @@
     }
 }
 
-- (id)initWithCoder:(NSCoder *)aDecoder
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
     if ((self = [self init]))
     {
@@ -151,7 +151,7 @@
     }
 }
 
-- (id)copyWithZone:(NSZone *)zone
+- (instancetype)copyWithZone:(NSZone *)zone
 {
     NSObject *copy = [[[self class] allocWithZone:zone] init];
     for (NSString *key in [self codableKeys])
