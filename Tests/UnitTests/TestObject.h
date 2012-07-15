@@ -12,7 +12,8 @@
 
 @property (nonatomic, strong) NSString *publicString;
 @property (nonatomic, assign) NSInteger publicInteger;
-@property (nonatomic, readonly) NSInteger readonlyInteger;
+@property (nonatomic, readonly) NSInteger readonlyIntegerWithUnsupportedIvar;
+@property (nonatomic, readonly) NSInteger readonlyIntegerWithSupportedIvar;
 @property (nonatomic, readonly) NSInteger readonlyIntegerWithPrivateSetter;
 
 - (void)setUpReadonlyAndPrivateData;

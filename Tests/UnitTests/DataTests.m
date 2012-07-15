@@ -27,13 +27,14 @@
     TestObject *output = [NSKeyedUnarchiver unarchiveObjectWithData:data];
     
     //check eligible values are saved
-    NSAssert([output.publicString isEqual:input.publicString], @"Public string failed");
-    NSAssert(output.publicInteger == input.publicInteger, @"Public integer failed");
-    NSAssert(output.readonlyIntegerWithPrivateSetter == input.readonlyIntegerWithPrivateSetter, @"Readonly integer with private setter failed");
-    NSAssert([output privateDataIsEqual:input], @"Private integer failed");
+    NSAssert([output.publicString isEqual:input.publicString], @"Public string test failed");
+    NSAssert(output.publicInteger == input.publicInteger, @"Public integer test failed");
+    NSAssert(output.readonlyIntegerWithSupportedIvar == input.readonlyIntegerWithSupportedIvar, @"Readonly integer with KVC-compliant ivar test failed");
+    NSAssert(output.readonlyIntegerWithPrivateSetter == input.readonlyIntegerWithPrivateSetter, @"Readonly integer with private setter test failed");
+    NSAssert([output privateDataIsEqual:input], @"Private integer test failed");
     
     //check ineligible values are not saved
-    NSAssert(output.readonlyInteger != input.readonlyInteger, @"Readonly integer failed");
+    NSAssert(output.readonlyIntegerWithUnsupportedIvar != input.readonlyIntegerWithUnsupportedIvar, @"Readonly integer without KVC-compliant ivar test failed");
 }
 
 @end

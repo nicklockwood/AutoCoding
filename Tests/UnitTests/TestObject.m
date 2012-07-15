@@ -19,22 +19,23 @@
 
 @implementation TestObject
 
-@synthesize publicString;
-@synthesize publicInteger;
-@synthesize readonlyInteger;
-@synthesize readonlyIntegerWithPrivateSetter;
-@synthesize privateInteger;
+@synthesize publicString = _publicString;
+@synthesize publicInteger = _publicInteger;
+@synthesize readonlyIntegerWithUnsupportedIvar = _readonlyIntegerWithUnsupportedIvar123;
+@synthesize readonlyIntegerWithSupportedIvar = _readonlyIntegerWithSupportedIvar;
+@synthesize readonlyIntegerWithPrivateSetter = _readonlyIntegerWithPrivateSetter123;
+@synthesize privateInteger = _privateInteger;
 
 - (void)setUpReadonlyAndPrivateData
 {
-    readonlyInteger = 7;
-    readonlyIntegerWithPrivateSetter = 8;
-    privateInteger = 9;
+    _readonlyIntegerWithUnsupportedIvar123 = 7;
+    _readonlyIntegerWithPrivateSetter123 = 8;
+    _privateInteger = 9;
 }
 
 - (BOOL)privateDataIsEqual:(TestObject *)object
 {
-    return privateInteger == object.privateInteger;
+    return _privateInteger == object.privateInteger;
 }
 
 @end
