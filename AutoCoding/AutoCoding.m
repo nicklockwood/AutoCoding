@@ -1,7 +1,7 @@
 //
-//  NSObject+AutoCoding.m
+//  AutoCoding.m
 //
-//  Version 1.2
+//  Version 1.2.1
 //
 //  Created by Nick Lockwood on 19/11/2011.
 //  Copyright (c) 2011 Charcoal Design
@@ -30,7 +30,7 @@
 //  3. This notice may not be removed or altered from any source distribution.
 //
 
-#import "NSObject+AutoCoding.h"
+#import "AutoCoding.h"
 #import <objc/runtime.h> 
 
 
@@ -75,7 +75,7 @@
 	return object;
 }
 
-- (void)writeToFile:(NSString *)filePath atomically:(BOOL)useAuxiliaryFile
+- (BOOL)writeToFile:(NSString *)filePath atomically:(BOOL)useAuxiliaryFile
 {
     //note: NSData, NSDictionary and NSArray already implement this method
     //and do not save using NSCoding, however the objectWithContentsOfFile
@@ -83,7 +83,7 @@
     
     //archive object
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self];
-    [data writeToFile:filePath atomically:useAuxiliaryFile];
+    return [data writeToFile:filePath atomically:useAuxiliaryFile];
 }
 
 - (NSArray *)codableKeys

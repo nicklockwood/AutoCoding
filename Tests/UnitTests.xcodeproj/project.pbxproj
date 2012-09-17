@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		011EF217151BD08100359942 /* NSObject+AutoCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 011EF216151BD08100359942 /* NSObject+AutoCoding.m */; };
 		011EF21A151BD6CE00359942 /* TestObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 011EF219151BD6CE00359942 /* TestObject.m */; };
+		0162CF8E1606F9B90043113D /* AutoCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 0162CF8D1606F9B90043113D /* AutoCoding.m */; };
 		0177129214BF91160050C6BC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0177129114BF91160050C6BC /* Foundation.framework */; };
 		0177129514BF91160050C6BC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0177129414BF91160050C6BC /* main.m */; };
 		0177129914BF91160050C6BC /* UnitTests.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0177129814BF91160050C6BC /* UnitTests.1 */; };
@@ -30,10 +30,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		011EF215151BD08100359942 /* NSObject+AutoCoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+AutoCoding.h"; sourceTree = "<group>"; };
-		011EF216151BD08100359942 /* NSObject+AutoCoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+AutoCoding.m"; sourceTree = "<group>"; };
 		011EF218151BD6CE00359942 /* TestObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestObject.h; sourceTree = "<group>"; };
 		011EF219151BD6CE00359942 /* TestObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestObject.m; sourceTree = "<group>"; };
+		0162CF8C1606F9B90043113D /* AutoCoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoCoding.h; sourceTree = "<group>"; };
+		0162CF8D1606F9B90043113D /* AutoCoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AutoCoding.m; sourceTree = "<group>"; };
 		0177128D14BF91160050C6BC /* UnitTests */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = UnitTests; sourceTree = BUILT_PRODUCTS_DIR; };
 		0177129114BF91160050C6BC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		0177129414BF91160050C6BC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = main.m; path = UnitTests/main.m; sourceTree = SOURCE_ROOT; };
@@ -60,8 +60,8 @@
 		011EF214151BD08100359942 /* AutoCoding */ = {
 			isa = PBXGroup;
 			children = (
-				011EF215151BD08100359942 /* NSObject+AutoCoding.h */,
-				011EF216151BD08100359942 /* NSObject+AutoCoding.m */,
+				0162CF8C1606F9B90043113D /* AutoCoding.h */,
+				0162CF8D1606F9B90043113D /* AutoCoding.m */,
 			);
 			name = AutoCoding;
 			path = ../AutoCoding;
@@ -178,8 +178,8 @@
 				0177129514BF91160050C6BC /* main.m in Sources */,
 				017712AD14BF92620050C6BC /* DataTests.m in Sources */,
 				017712B114BF92D00050C6BC /* TestCase.m in Sources */,
-				011EF217151BD08100359942 /* NSObject+AutoCoding.m in Sources */,
 				011EF21A151BD6CE00359942 /* TestObject.m in Sources */,
+				0162CF8E1606F9B90043113D /* AutoCoding.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

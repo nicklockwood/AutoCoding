@@ -1,3 +1,8 @@
+Version 1.2.1
+
+- writeToFile:atomically: method now returns a BOOL to indicate success
+- Changed category file names
+
 Version 1.2
 
 - Read-only properties can now be copied and coded as long as they have a KVC compliant ivar (i.e. one whose name matches the property or the property with the _ prefix)

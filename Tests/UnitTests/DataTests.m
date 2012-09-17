@@ -7,7 +7,7 @@
 
 #import "DataTests.h"
 #import "TestObject.h"
-#import "NSObject+AutoCoding.h"
+#import "AutoCoding.h"
 
 
 @implementation DataTests

@@ -35,7 +35,7 @@ AutoCoding is fully thread-safe.
 Installation
 --------------
 
-To use the AutoCoding category in your project, just drag the NSObject+AutoCoding files into your project.
+To use the AutoCoding category in your project, just drag the AutoCoding .h and .m files into your project.
 
 
 Category methods
@@ -55,13 +55,13 @@ This method can be used to exclude certain properties from automatic coding with
     
 This method populates the object's properties using the provided coder object, based on the codableKeys array. This is called internally by the initWithCoder: method, but may be useful if you wish to initialise an object from a coder archive after it has already been created. You could even initialise the object by merging the results of several different archives by calling `setWithCoder:` more than once.
 
-	+ (instancetype)objectWithContentsOfFile:(NSString *)path;
-	
+    + (instancetype)objectWithContentsOfFile:(NSString *)path;
+    
 This attempts to load the file using the following sequence: 1) If the file is an NSCoded archive, load the root object and return it, 2) If the file is an ordinary Plist, load and return the root object, 3) Return the raw data as an NSData object. If the de-serialised object is not a subclass of the class being used to load it, an exception will be thrown (to avoid this, call the method on `NSObject` instead of a specific subclass).
-	
-	- (void)writeToFile:(NSString *)filePath atomically:(BOOL)useAuxiliaryFile;
-	
-This attempts to write the file to disk. This method is overridden by the equivalent methods for NSData, NSDictionary and NSArray, which save the file as a human-readable XML Plist rather than an binary NSCoded Plist archive, but the `objectWithContentsOfFile:` method will correctly de-serialise these again anyway. For any other object it will serialise the object using the NSCoding protocol and write out the file as a NSCoded binary Plist archive.
+    
+    - (BOOL)writeToFile:(NSString *)filePath atomically:(BOOL)useAuxiliaryFile;
+    
+This attempts to write the file to disk. This method is overridden by the equivalent methods for NSData, NSDictionary and NSArray, which save the file as a human-readable XML Plist rather than an binary NSCoded Plist archive, but the `objectWithContentsOfFile:` method will correctly de-serialise these again anyway. For any other object it will serialise the object using the NSCoding protocol and write out the file as a NSCoded binary Plist archive. Returns YES on success and NO on failure.
 
 
 Tips
@@ -69,14 +69,14 @@ Tips
 
 1. If you want to perform initialisation of the class post or prior to the properties being loaded via NSCoding, override the `setWithCoder:` method and call the super-implementation before or after applying your own logic, like this:
 
-        - (void)setWithCoder:(NSCoder *)coder
-        {
-            //pre-initialisation
-            [super setWithCoder:coder];
-            //post-initialisation
-        }
+    - (void)setWithCoder:(NSCoder *)coder
+    {
+        //pre-initialisation
+        [super setWithCoder:coder];
+        //post-initialisation
+    }
 
-    Note that unlike in previous versions, the `init` method is not called when using `initWithCoder:`.
+Note that unlike in previous versions, the `init` method is not called when using `initWithCoder:`.
 
 2. If you want to perform some cleanup or post-processing or substitute a different object after the object has been loaded via NSCoding, you can use the `awakeAfterUsingCoder:` method, which is defined in the NSObject class reference.
 
@@ -86,53 +86,53 @@ Tips
 
 5. If you have properties of a type that doesn't support NSCoding (e.g. a struct), and you wish to code them yourself by applying a conversion function, return the name of the property in the `uncodableKeys` array and override the `setWithCoder:` and `encodeWithCoder:` methods (remembering to call the super-implementations of those methods to automatically load and save the other properties of the object). Like this:
 
-        - (NSArray *)uncodableKeys
-        {
-            return [NSArray arrayWithObject:@"uncodableProperty"];
-        }
-        
-        - (void)setWithCoder:(NSCoder *)coder
-        {
-            [super setWithCoder:coder];
-            self.uncodableProperty = DECODE_VALUE([coder decodeObjectForKey:@"uncodableProperty"];
-        }
-        
-        - (void)encodeWithCoder:(NSCoder *)coder
-        {
-            [super encodeWithCoder:coder];
-            [coder encodeObject:ENCODE_VALUE(self.newProperty) forKey:@"uncodableProperty"];
-        }
+    - (NSArray *)uncodableKeys
+    {
+        return [NSArray arrayWithObject:@"uncodableProperty"];
+    }
+    
+    - (void)setWithCoder:(NSCoder *)coder
+    {
+        [super setWithCoder:coder];
+        self.uncodableProperty = DECODE_VALUE([coder decodeObjectForKey:@"uncodableProperty"];
+    }
+    
+    - (void)encodeWithCoder:(NSCoder *)coder
+    {
+        [super encodeWithCoder:coder];
+        [coder encodeObject:ENCODE_VALUE(self.newProperty) forKey:@"uncodableProperty"];
+    }
 
 6. If you have changed the name of a property, but want to check for the existence of the old key name for backwards compatibility, override the `setWithCoder:` method and add a check for the old property as follows:
 
-        - (void)setWithCoder:(NSCoder *)coder
-        {
-            [super setWithCoder:coder];
-            self.newProperty = [coder objectForKey:@"oldProperty"] ?: self.newProperty;
-        }
+    - (void)setWithCoder:(NSCoder *)coder
+    {
+        [super setWithCoder:coder];
+        self.newProperty = [coder objectForKey:@"oldProperty"] ?: self.newProperty;
+    }
 
 7. If you have changed the name of a property, but want to load *and save* it using the old key name for backwards compatibility, return the name of the new property in the `uncodableKeys` array and override the `setWithCoder:`, `encodeWithCoder:` and `copyWithZone:` methods to save and load the property using the old name (remembering to call the super-implementations of those methods to automatically load and save the other properties of the object). Like this:
 
-        - (NSArray *)uncodableKeys
-        {
-            return [NSArray arrayWithObject:@"newProperty"];
-        }
-        
-        - (void)setWithCoder:(NSCoder *)coder
-        {
-            [super setWithCoder:coder];
-            self.newProperty = [coder objectForKey:@"oldProperty"];
-        }
-        
-        - (void)encodeWithCoder:(NSCoder *)coder
-        {
-            [super encodeWithCoder:coder];
-            [coder encodeObject:self.newProperty forKey:@"oldProperty"];
-        }
-        
-        - (id)copyWithZone:(NSZone *)zone
-        {
-            id copy = [super copyWithZone:zone];
-            [copy setValue:self.newProperty forKey:@"newProperty"];
-            return copy;
-        }
+    - (NSArray *)uncodableKeys
+    {
+        return [NSArray arrayWithObject:@"newProperty"];
+    }
+    
+    - (void)setWithCoder:(NSCoder *)coder
+    {
+        [super setWithCoder:coder];
+        self.newProperty = [coder objectForKey:@"oldProperty"];
+    }
+    
+    - (void)encodeWithCoder:(NSCoder *)coder
+    {
+        [super encodeWithCoder:coder];
+        [coder encodeObject:self.newProperty forKey:@"oldProperty"];
+    }
+    
+    - (id)copyWithZone:(NSZone *)zone
+    {
+        id copy = [super copyWithZone:zone];
+        [copy setValue:self.newProperty forKey:@"newProperty"];
+        return copy;
+    }
