@@ -1,3 +1,11 @@
+Version 1.3
+
+- AutoCoding no longer attempts to encode virtual properties. Only ivar-backed properties will be encoded
+- Added dictionaryRepresentation method for quickly accessing all properties of a class
+- The codableKeys and uncodableKeys methods are now class methods, allowing them to be used more easily in factory methods 
+- The class-level codable/uncodableKeys methods now only return the properties for the class on which they are called, not all of its superclasses as well
+- It is no longer necessary to call [super codableKeys] or [super uncodableKeys] and merge arrays when overriding the codableKeys or uncodableKeys class methods on a subclass (overriding the codableKeys instance method is not recommended)
+
 Version 1.2.1
 
 - writeToFile:atomically: method now returns a BOOL to indicate success

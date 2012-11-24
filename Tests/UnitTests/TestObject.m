@@ -25,6 +25,7 @@
 @synthesize readonlyIntegerWithSupportedIvar = _readonlyIntegerWithSupportedIvar;
 @synthesize readonlyIntegerWithPrivateSetter = _readonlyIntegerWithPrivateSetter123;
 @synthesize privateInteger = _privateInteger;
+@synthesize nilProperty = _nilProperty;
 
 - (void)setUpReadonlyAndPrivateData
 {

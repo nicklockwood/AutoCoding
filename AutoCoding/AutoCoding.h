@@ -1,7 +1,7 @@
 //
 //  AutoCoding.h
 //
-//  Version 1.2.1
+//  Version 1.3
 //
 //  Created by Nick Lockwood on 19/11/2011.
 //  Copyright (c) 2011 Charcoal Design
@@ -34,9 +34,14 @@
 
 //coding
 
-- (NSArray *)codableKeys;
-- (NSArray *)uncodableKeys;
++ (NSArray *)codableKeys;
++ (NSArray *)uncodableKeys;
 - (void)setWithCoder:(NSCoder *)aDecoder;
+
+//property access
+
+- (NSArray *)codableKeys;
+- (NSDictionary *)dictionaryRepresentation;
 
 //loading / saving
 
