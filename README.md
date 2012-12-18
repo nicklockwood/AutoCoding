@@ -94,9 +94,9 @@ Note that unlike in previous versions, the `init` method is not called when usin
 
 5. If you have properties of a type that doesn't support NSCoding (e.g. a struct), and you wish to code them yourself by applying a conversion function, return the name of the property in the `uncodableKeys` array and override the `setWithCoder:` and `encodeWithCoder:` methods (remembering to call the super-implementations of those methods to automatically load and save the other properties of the object). Like this:
 
-    - (NSArray *)uncodableKeys
+    + (NSArray *)uncodableKeys
     {
-        return [NSArray arrayWithObject:@"uncodableProperty"];
+        return @[@"uncodableProperty"];
     }
     
     - (void)setWithCoder:(NSCoder *)coder
@@ -121,9 +121,9 @@ Note that unlike in previous versions, the `init` method is not called when usin
 
 7. If you have changed the name of a property, but want to load *and save* it using the old key name for backwards compatibility, return the name of the new property in the `uncodableKeys` array and override the `setWithCoder:`, `encodeWithCoder:` and `copyWithZone:` methods to save and load the property using the old name (remembering to call the super-implementations of those methods to automatically load and save the other properties of the object). Like this:
 
-    - (NSArray *)uncodableKeys
+    + (NSArray *)uncodableKeys
     {
-        return [NSArray arrayWithObject:@"newProperty"];
+        return @[@"newProperty"];
     }
     
     - (void)setWithCoder:(NSCoder *)coder
