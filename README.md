@@ -119,7 +119,7 @@ Note that unlike in previous versions, the `init` method is not called when usin
         self.newProperty = [coder objectForKey:@"oldProperty"] ?: self.newProperty;
     }
 
-7. If you have changed the name of a property, but want to load *and save* it using the old key name for backwards compatibility, return the name of the new property in the `uncodableKeys` array and override the `setWithCoder:`, `encodeWithCoder:` and `copyWithZone:` methods to save and load the property using the old name (remembering to call the super-implementations of those methods to automatically load and save the other properties of the object). Like this:
+7. If you have changed the name of a property, but want to load *and save* it using the old key name for backwards compatibility, return the name of the new property in the `uncodableKeys` array and override the `setWithCoder:`, `encodeWithCoder:` and `copy` methods to save and load the property using the old name (remembering to call the super-implementations of those methods to automatically load and save the other properties of the object). Like this:
 
     + (NSArray *)uncodableKeys
     {
@@ -138,9 +138,9 @@ Note that unlike in previous versions, the `init` method is not called when usin
         [coder encodeObject:self.newProperty forKey:@"oldProperty"];
     }
     
-    - (id)copyWithZone:(NSZone *)zone
+    - (id)copy
     {
-        id copy = [super copyWithZone:zone];
+        id copy = [super copy];
         [copy setValue:self.newProperty forKey:@"newProperty"];
         return copy;
     }

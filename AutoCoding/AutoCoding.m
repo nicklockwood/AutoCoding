@@ -1,7 +1,7 @@
 //
 //  AutoCoding.m
 //
-//  Version 1.3
+//  Version 1.3.1
 //
 //  Created by Nick Lockwood on 19/11/2011.
 //  Copyright (c) 2011 Charcoal Design
@@ -33,8 +33,42 @@
 #import "AutoCoding.h"
 #import <objc/runtime.h> 
 
+static void AC_swizzleInstanceMethod(Class c, SEL original, SEL replacement)
+{
+    Method a = class_getInstanceMethod(c, original);
+    Method b = class_getInstanceMethod(c, replacement);
+    if (class_addMethod(c, original, method_getImplementation(b), method_getTypeEncoding(b)))
+    {
+        class_replaceMethod(c, replacement, method_getImplementation(a), method_getTypeEncoding(a));
+    }
+    else
+    {
+        method_exchangeImplementations(a, b);
+    }
+}
 
 @implementation NSObject (AutoCoding)
+
++ (void)load
+{
+    AC_swizzleInstanceMethod(self, @selector(copy), @selector(copy_AC));
+}
+
+- (instancetype)copy_AC
+{
+    if ([self respondsToSelector:@selector(copyWithZone:)])
+    {
+        return [(id<NSCopying>)self copyWithZone:nil];
+    }
+    Class class = [self class];
+    NSObject *copy = [[class alloc] init];
+    for (NSString *key in [self codableKeys])
+    {
+        id object = [self valueForKey:key];
+        if (object) [copy setValue:object forKey:key];
+    }
+    return copy;
+}
 
 + (instancetype)objectWithContentsOfFile:(NSString *)filePath
 {   
@@ -209,18 +243,6 @@
         id object = [self valueForKey:key];
         if (object) [aCoder encodeObject:object forKey:key];
     }
-}
-
-- (instancetype)copyWithZone:(NSZone *)zone
-{
-    Class class = [self class];
-    NSObject *copy = [[class allocWithZone:zone] init];
-    for (NSString *key in [self codableKeys])
-    {
-        id object = [self valueForKey:key];
-        if (object) [copy setValue:object forKey:key];
-    }
-    return copy;
 }
 
 @end

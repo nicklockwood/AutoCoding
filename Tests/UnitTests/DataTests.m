@@ -37,4 +37,12 @@
     NSAssert(output.readonlyIntegerWithUnsupportedIvar != input.readonlyIntegerWithUnsupportedIvar, @"Readonly integer without KVC-compliant ivar test failed");
 }
 
+- (void)testCopy
+{
+    //test copy
+    NSObject *foo = [[NSObject alloc] init];
+    NSObject *bar = [foo copy];
+    NSAssert(foo != bar, @"Copy test failed");
+}
+
 @end

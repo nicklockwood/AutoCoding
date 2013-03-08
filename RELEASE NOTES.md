@@ -1,3 +1,9 @@
+Version 1.3.1
+
+- Fixed issue with CoreData where AutoCoding's copyWithZone: implementation conflicted with NSManagedObjects
+- Due to changes in the automatic NSCopying implementation, calling `[super copyWithZone:]` will no longer work. If you need to do this, override the `copy` method and call `[super copy]` instead
+- Added Podspec file
+
 Version 1.3
 
 - AutoCoding no longer attempts to encode virtual properties. Only ivar-backed properties will be encoded
