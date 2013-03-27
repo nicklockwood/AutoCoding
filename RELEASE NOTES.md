@@ -1,3 +1,9 @@
+Version 2.0
+
+- AutoCoding now implements the NSSecureCoding protocol automatically
+- AutoCoding now detects property types automatically and throws an exception by default if encoded classes to not match the expected type
+- Autocoding 2.0 is data-compatible with previous releases, but may require code changes when upgrading.
+
 Version 1.3.1
 
 - Fixed issue with CoreData where AutoCoding's copyWithZone: implementation conflicted with NSManagedObjects

@@ -40,9 +40,35 @@
 - (void)testCopy
 {
     //test copy
-    NSObject *foo = [[NSObject alloc] init];
-    NSObject *bar = [foo copy];
+    TestObject *foo = [[TestObject alloc] init];
+    TestObject *bar = [foo copy];
     NSAssert(foo != bar, @"Copy test failed");
+    NSAssert([foo isEqual:bar], @"Copy test failed");
+}
+
+- (void)testSecureCoding
+{
+    //create object
+    TestObject *input = [[TestObject alloc] init];
+    input.publicString = (NSString *)@5; //deliberate type mismatch
+    
+    //save object
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:input];
+    
+    BOOL didCrash = NO;
+    @try
+    {
+        //load object (should crash)
+        [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    }
+    @catch (NSException *exception)
+    {
+        didCrash = YES;
+    }
+    @finally
+    {
+        NSAssert(didCrash, @"Decoding invalid object type failed");
+    }
 }
 
 @end

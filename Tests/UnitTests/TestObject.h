@@ -16,6 +16,7 @@
 @property (nonatomic, readonly) NSInteger readonlyIntegerWithSupportedIvar;
 @property (nonatomic, readonly) NSInteger readonlyIntegerWithPrivateSetter;
 @property (nonatomic, strong) id nilProperty;
+@property (nonatomic, assign) Class classProperty;
 
 - (void)setUpReadonlyAndPrivateData;
 - (BOOL)privateDataIsEqual:(TestObject *)object;
