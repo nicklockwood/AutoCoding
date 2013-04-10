@@ -7,6 +7,7 @@
 //
 
 #import "TestObject.h"
+#import "AutoCoding.h"
 
 
 @interface TestObject ()
@@ -32,6 +33,11 @@
 - (BOOL)privateDataIsEqual:(TestObject *)object
 {
     return _privateInteger == object.privateInteger;
+}
+
+- (BOOL)isEqual:(id)object
+{
+    return [[self dictionaryRepresentation] isEqualToDictionary:[object dictionaryRepresentation]];
 }
 
 @end

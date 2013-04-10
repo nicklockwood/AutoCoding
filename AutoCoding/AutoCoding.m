@@ -1,7 +1,7 @@
 //
 //  AutoCoding.m
 //
-//  Version 2.0
+//  Version 2.0.1
 //
 //  Created by Nick Lockwood on 19/11/2011.
 //  Copyright (c) 2011 Charcoal Design
@@ -31,7 +31,7 @@
 //
 
 #import "AutoCoding.h"
-#import <objc/runtime.h> 
+#import <objc/runtime.h>
 
 static void AC_swizzleInstanceMethod(Class c, SEL original, SEL replacement)
 {
@@ -47,6 +47,12 @@ static void AC_swizzleInstanceMethod(Class c, SEL original, SEL replacement)
     }
 }
 
+@interface NSObject (AutoCoding_NSCopying)
+
+- (id)copyWithZone:(NSZone *)zone;
+
+@end
+
 @implementation NSObject (AutoCoding)
 
 + (BOOL)supportsSecureCoding
@@ -56,17 +62,14 @@ static void AC_swizzleInstanceMethod(Class c, SEL original, SEL replacement)
 
 + (void)load
 {
-    AC_swizzleInstanceMethod(self, @selector(copy), @selector(copy_AC));
+    AC_swizzleInstanceMethod(self, @selector(methodSignatureForSelector:), @selector(methodSignatureForSelector_AC:));
+    AC_swizzleInstanceMethod(self, @selector(forwardInvocation:), @selector(forwardInvocation_AC:));
+    AC_swizzleInstanceMethod(self, @selector(respondsToSelector:), @selector(respondsToSelector_AC:));
 }
 
-- (instancetype)copy_AC __attribute__((ns_returns_retained))
+- (instancetype)copyWithZone_AC:(NSZone *)zone __attribute__((ns_returns_retained))
 {
-    if ([self respondsToSelector:@selector(copyWithZone:)])
-    {
-        return [(id<NSCopying>)self copyWithZone:nil];
-    }
-    Class class = [self class];
-    NSObject *copy = [[class alloc] init];
+    NSObject *copy = [[[self class] allocWithZone:zone] init];
     for (NSString *key in [self codableProperties])
     {
         id object = [self valueForKey:key];
@@ -75,8 +78,44 @@ static void AC_swizzleInstanceMethod(Class c, SEL original, SEL replacement)
     return copy;
 }
 
+- (NSMethodSignature *)methodSignatureForSelector_AC:(SEL)selector
+{
+    @synchronized([self class])
+    {
+        //look up method signature
+        NSMethodSignature *signature = [self methodSignatureForSelector_AC:selector];
+        if (!signature && selector == @selector(copyWithZone:))
+        {
+            return [NSMethodSignature signatureWithObjCTypes:"@@:@"];
+        }
+        return signature;
+    }
+}
+
+- (void)forwardInvocation_AC:(NSInvocation *)invocation
+{
+    if ([invocation selector] == @selector(copyWithZone:))
+    {
+        [invocation setSelector:@selector(copyWithZone_AC:)];
+        [invocation invokeWithTarget:self];
+    }
+    else
+    {
+        [self forwardInvocation_AC:invocation];
+    }
+}
+
+- (BOOL)respondsToSelector_AC:(SEL)selector
+{
+    if (selector == @selector(copyWithZone:))
+    {
+        return YES;
+    }
+    return [self respondsToSelector_AC:selector];
+}
+
 + (instancetype)objectWithContentsOfFile:(NSString *)filePath
-{   
+{
     //load the file
     NSData *data = [NSData dataWithContentsOfFile:filePath];
     
@@ -150,7 +189,7 @@ static void AC_swizzleInstanceMethod(Class c, SEL original, SEL replacement)
             {
                 NSLog(@"AutoCoding Warning: uncodableKeys method is no longer supported. Use uncodableProperties instead.");
             }
-     
+            
             codableProperties = [NSMutableDictionary dictionary];
             unsigned int propertyCount;
             objc_property_t *properties = class_copyPropertyList(self, &propertyCount);
@@ -255,7 +294,7 @@ static void AC_swizzleInstanceMethod(Class c, SEL original, SEL replacement)
         {
             propertiesByClass = [[NSMutableDictionary alloc] init];
         }
-
+        
         NSString *className = NSStringFromClass([self class]);
         NSDictionary *codableProperties = propertiesByClass[className];
         if (codableProperties == nil)

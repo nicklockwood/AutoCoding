@@ -1,3 +1,8 @@
+Version 2.0.1
+
+- Fixed bug where AutoCoding's NSCopying implementation was not compatible with properties using copy semantics due to lack of a copyWithZone: implementation.
+- Now returns YES for respondsToSelector:@selector(copyWithZone:).
+
 Version 2.0
 
 - AutoCoding now implements the NSSecureCoding protocol automatically

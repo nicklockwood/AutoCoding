@@ -44,6 +44,14 @@
     TestObject *bar = [foo copy];
     NSAssert(foo != bar, @"Copy test failed");
     NSAssert([foo isEqual:bar], @"Copy test failed");
+    
+    //test copyWithZone:
+    bar = [foo copyWithZone:nil];
+    NSAssert(foo != bar, @"Copy test failed");
+    NSAssert([foo isEqual:bar], @"Copy test failed");
+    
+    //test respondsToSelector:
+    NSAssert([foo respondsToSelector:@selector(copyWithZone:)], @"Copy test failed");
 }
 
 - (void)testSecureCoding
