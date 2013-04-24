@@ -54,6 +54,24 @@
     NSAssert([foo respondsToSelector:@selector(copyWithZone:)], @"Copy test failed");
 }
 
+- (void)testUncodable
+{
+    //create object
+    TestObject *input = [[TestObject alloc] init];
+    input.publicUncodable = 7;
+    [input setUpReadonlyAndPrivateData];
+    
+    //save object
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:input];
+    
+    //load object
+    TestObject *output = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    
+    //check eligible values are saved
+    NSAssert(output.publicUncodable != input.publicUncodable, @"Public uncodable test failed");
+    NSAssert(![output privateUncodableIsEqual:input], @"Private uncodable test failed");
+}
+
 - (void)testSecureCoding
 {
     //create object

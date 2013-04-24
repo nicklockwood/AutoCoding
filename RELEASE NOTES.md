@@ -1,3 +1,7 @@
+Version 2.0.2
+
+- Fixed longstanding issue where uncodableProperties / uncodableKeys was ignored for private properties. 
+
 Version 2.0.1
 
 - Fixed bug where AutoCoding's NSCopying implementation was not compatible with properties using copy semantics due to lack of a copyWithZone: implementation.

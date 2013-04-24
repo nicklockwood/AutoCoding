@@ -1,7 +1,7 @@
 //
 //  AutoCoding.m
 //
-//  Version 2.0.1
+//  Version 2.0.2
 //
 //  Created by Nick Lockwood on 19/11/2011.
 //  Copyright (c) 2011 Charcoal Design
@@ -200,76 +200,79 @@ static void AC_swizzleInstanceMethod(Class c, SEL original, SEL replacement)
                 const char *propertyName = property_getName(property);
                 NSString *key = [NSString stringWithCString:propertyName encoding:NSUTF8StringEncoding];
                 
-                //get property type
-                Class class = nil;
-                char *typeEncoding = property_copyAttributeValue(property, "T");
-                switch (typeEncoding[0])
+                //check if codable
+                if (![[self uncodableProperties] containsObject:key])
                 {
-                    case '@':
+                    //get property type
+                    Class class = nil;
+                    char *typeEncoding = property_copyAttributeValue(property, "T");
+                    switch (typeEncoding[0])
                     {
-                        if (strlen(typeEncoding) >= 3)
+                        case '@':
                         {
-                            char *className = strndup(typeEncoding + 2, strlen(typeEncoding) - 3);
-                            NSString *name = [NSString stringWithUTF8String:className];
-                            NSRange range = [name rangeOfString:@"<"];
-                            if (range.location != NSNotFound)
+                            if (strlen(typeEncoding) >= 3)
                             {
-                                name = [name substringToIndex:range.location];
+                                char *className = strndup(typeEncoding + 2, strlen(typeEncoding) - 3);
+                                NSString *name = [NSString stringWithUTF8String:className];
+                                NSRange range = [name rangeOfString:@"<"];
+                                if (range.location != NSNotFound)
+                                {
+                                    name = [name substringToIndex:range.location];
+                                }
+                                class = NSClassFromString(name) ?: [NSObject class];
+                                free(className);
                             }
-                            class = NSClassFromString(name) ?: [NSObject class];
-                            free(className);
+                            break;
                         }
-                        break;
-                    }
-                    case 'c':
-                    case 'i':
-                    case 's':
-                    case 'l':
-                    case 'q':
-                    case 'C':
-                    case 'I':
-                    case 'S':
-                    case 'f':
-                    case 'd':
-                    case 'B':
-                    {
-                        class = [NSNumber class];
-                        break;
-                    }
-                    case '{':
-                    {
-                        class = [NSValue class];
-                        break;
-                    }
-                }
-                free(typeEncoding);
-                
-                if (class)
-                {
-                    //see if there is a backing ivar
-                    char *ivar = property_copyAttributeValue(property, "V");
-                    if (ivar)
-                    {
-                        //check if read-only
-                        char *readonly = property_copyAttributeValue(property, "R");
-                        if (readonly)
+                        case 'c':
+                        case 'i':
+                        case 's':
+                        case 'l':
+                        case 'q':
+                        case 'C':
+                        case 'I':
+                        case 'S':
+                        case 'f':
+                        case 'd':
+                        case 'B':
                         {
-                            //check if ivar has KVC-compliant name
-                            NSString *ivarName = [NSString stringWithFormat:@"%s", ivar];
-                            if ([ivarName isEqualToString:key] ||
-                                [ivarName isEqualToString:[@"_" stringByAppendingString:key]])
+                            class = [NSNumber class];
+                            break;
+                        }
+                        case '{':
+                        {
+                            class = [NSValue class];
+                            break;
+                        }
+                    }
+                    free(typeEncoding);
+                    
+                    if (class)
+                    {
+                        //see if there is a backing ivar
+                        char *ivar = property_copyAttributeValue(property, "V");
+                        if (ivar)
+                        {
+                            char *readonly = property_copyAttributeValue(property, "R");
+                            if (readonly)
                             {
-                                //no setter, but setValue:forKey: will still work
+                                //check if ivar has KVC-compliant name
+                                NSString *ivarName = [NSString stringWithFormat:@"%s", ivar];
+                                if ([ivarName isEqualToString:key] ||
+                                    [ivarName isEqualToString:[@"_" stringByAppendingString:key]])
+                                {
+                                    //no setter, but setValue:forKey: will still work
+                                    codableProperties[key] = class;
+                                }
+                                free(readonly);
+                            }
+                            else
+                            {
+                                //there is a setter method so setValue:forKey: will work
                                 codableProperties[key] = class;
                             }
-                            free(readonly);
+                            free(ivar);
                         }
-                        else if (![[self uncodableProperties] containsObject:key])
-                        {
-                            //there is a setter method so setValue:forKey: will work
-                            codableProperties[key] = class;
-                        }
-                        free(ivar);
                     }
                 }
             }

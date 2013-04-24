@@ -12,6 +12,7 @@
 
 @property (nonatomic, strong) NSString *publicString;
 @property (nonatomic, assign) NSInteger publicInteger;
+@property (nonatomic, assign) NSInteger publicUncodable;
 @property (nonatomic, readonly) NSInteger readonlyIntegerWithUnsupportedIvar;
 @property (nonatomic, readonly) NSInteger readonlyIntegerWithSupportedIvar;
 @property (nonatomic, readonly) NSInteger readonlyIntegerWithPrivateSetter;
@@ -20,5 +21,6 @@
 
 - (void)setUpReadonlyAndPrivateData;
 - (BOOL)privateDataIsEqual:(TestObject *)object;
+- (BOOL)privateUncodableIsEqual:(TestObject *)object;
 
 @end
