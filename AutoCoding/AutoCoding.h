@@ -1,7 +1,7 @@
 //
 //  AutoCoding.h
 //
-//  Version 2.0.2
+//  Version 2.0.3
 //
 //  Created by Nick Lockwood on 19/11/2011.
 //  Copyright (c) 2011 Charcoal Design

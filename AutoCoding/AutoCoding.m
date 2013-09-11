@@ -1,7 +1,7 @@
 //
 //  AutoCoding.m
 //
-//  Version 2.0.2
+//  Version 2.0.3
 //
 //  Created by Nick Lockwood on 19/11/2011.
 //  Copyright (c) 2011 Charcoal Design
@@ -32,6 +32,7 @@
 
 #import "AutoCoding.h"
 #import <objc/runtime.h>
+
 
 static void AC_swizzleInstanceMethod(Class c, SEL original, SEL replacement)
 {
@@ -193,7 +194,7 @@ static void AC_swizzleInstanceMethod(Class c, SEL original, SEL replacement)
             codableProperties = [NSMutableDictionary dictionary];
             unsigned int propertyCount;
             objc_property_t *properties = class_copyPropertyList(self, &propertyCount);
-            for (int i = 0; i < propertyCount; i++)
+            for (unsigned int i = 0; i < propertyCount; i++)
             {
                 //get property name
                 objc_property_t property = properties[i];

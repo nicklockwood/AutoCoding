@@ -1,3 +1,7 @@
+Version 2.0.3
+
+- Now complies with the -Wextra warning level
+
 Version 2.0.2
 
 - Fixed longstanding issue where uncodableProperties / uncodableKeys was ignored for private properties. 

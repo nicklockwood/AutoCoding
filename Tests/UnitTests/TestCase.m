@@ -16,7 +16,7 @@
 {
     unsigned int count;
     Method *methods = class_copyMethodList([self class], &count);
-    for (int i = 0; i < count; i++)
+    for (unsigned int i = 0; i < count; i++)
     {
         Method method = methods[i];
         SEL selector = method_getName(method);
