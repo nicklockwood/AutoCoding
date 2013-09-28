@@ -180,13 +180,13 @@ static void AC_swizzleInstanceMethod(Class c, SEL original, SEL replacement)
         if (codableProperties == nil)
         {
             //deprecated
-            if ([self respondsToSelector:@selector(codableKeys)] ||
-                [self instancesRespondToSelector:@selector(codableKeys)])
+            SEL deprecatedSelector = NSSelectorFromString(@"codableKeys");
+            if ([self respondsToSelector:deprecatedSelector] || [self instancesRespondToSelector:deprecatedSelector])
             {
                 NSLog(@"AutoCoding Warning: codableKeys method is no longer supported. Use codableProperties instead.");
             }
-            if ([self respondsToSelector:@selector(uncodableKeys)] ||
-                [self instancesRespondToSelector:@selector(uncodableKeys)])
+            deprecatedSelector = NSSelectorFromString(@"uncodableKeys");
+            if ([self respondsToSelector:deprecatedSelector] || [self instancesRespondToSelector:deprecatedSelector])
             {
                 NSLog(@"AutoCoding Warning: uncodableKeys method is no longer supported. Use uncodableProperties instead.");
             }
