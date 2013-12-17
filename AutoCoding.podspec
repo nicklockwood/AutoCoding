@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name         = "AutoCoding"
   s.version      = "2.1"
-  s.summary      = "AutoCoding is a category on NSObject that provides automatic support for NSCoding and NSCopying to any object."
+  s.summary      = "AutoCoding is a category on NSObject that provides automatic support for NSCoding to any object."
   s.homepage     = "https://github.com/nicklockwood/AutoCoding"
   s.license      = 'zlib'
   s.author       = "Nick Lockwood"
