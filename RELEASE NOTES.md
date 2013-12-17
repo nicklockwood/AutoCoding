@@ -1,3 +1,11 @@
+Version 2.1
+
+- Removed automatic NSCopying implementation (see README for details)
+- The +codableProperties method will no longer include properties whose ivars are not KVC compliant, even if they are readwrite. This makes it easier to mark readwrite properties as unencodable without neededing to override methods
+- The +uncodableProperties method is now deprecated
+- dictionaryRepresentation method will now no longer include NSNull entries for nil values (these will simply be omitted from the result instead)
+- Now complies with the -Weverything warning level
+
 Version 2.0.3
 
 - Now complies with the -Wextra warning level
