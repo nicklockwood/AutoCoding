@@ -86,7 +86,7 @@ As of version 2.1, NSCopying is no longer implemented automatically, as this cau
     - (id)copyWithZone:(id)zone
     {
         id copy = [[[self class] alloc] init];
-        for (NSString *key in [self uncodableProperties])
+        for (NSString *key in [[self class] codableProperties].allKeys)
         {
             [copy setValue:[self valueForKey:key] forKey:key];
         }
