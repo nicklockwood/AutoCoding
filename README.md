@@ -86,14 +86,14 @@ As of version 2.1, NSCopying is no longer implemented automatically, as this cau
     - (id)copyWithZone:(id)zone
     {
         id copy = [[[self class] alloc] init];
-        for (NSString *key in [self uncodableProperties])
+        for (NSString *key in [self codableProperties])
         {
             [copy setValue:[self valueForKey:key] forKey:key];
         }
         return copy;
     }
     
-In order to properly support NSCopying, you should also override the `-hash` and `-isEqual:` methods for any object you intend to use with copying, so that a copied object has the same hash as, and is equal to the original.
+In order to properly support NSCopying, you should also override the `-hash` and `-isEqual:` methods for any object you intend to use with copying, so that a copied object has the same hash value and is equal to the original.
 
 
 Tips
