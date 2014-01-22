@@ -17,7 +17,7 @@
 //
 //  Permission is granted to anyone to use this software for any purpose,
 //  including commercial applications, and to alter it and redistribute it
-//  freely, subj/Users/nick/Dropbox/Open Source (GIT)/AutoCoding/Examples/TodoList/TodoList.xcodeproject to the following restrictions:
+//  freely, following restrictions:
 //
 //  1. The origin of this software must not be misrepresented; you must not
 //  claim that you wrote the original software. If you use this software
