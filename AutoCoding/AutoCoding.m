@@ -1,7 +1,7 @@
 //
 //  AutoCoding.m
 //
-//  Version 2.1
+//  Version 2.2
 //
 //  Created by Nick Lockwood on 19/11/2011.
 //  Copyright (c) 2011 Charcoal Design
@@ -35,6 +35,9 @@
 
 
 #pragma GCC diagnostic ignored "-Wgnu"
+
+
+static NSString *const AutocodingException = @"AutocodingException";
 
 
 @implementation NSObject (AutoCoding)
@@ -150,6 +153,8 @@
                 case 'C':
                 case 'I':
                 case 'S':
+                case 'L':
+                case 'Q':
                 case 'f':
                 case 'd':
                 case 'B':
@@ -167,7 +172,7 @@
             
             if (propertyClass)
             {
-                //see if there is a backing ivar
+                //check if there is a backing ivar
                 char *ivar = property_copyAttributeValue(property, "V");
                 if (ivar)
                 {
@@ -179,6 +184,19 @@
                         codableProperties[key] = propertyClass;
                     }
                     free(ivar);
+                }
+                else
+                {
+                    //check if property is dynamic and readwrite
+                    char *dynamic = property_copyAttributeValue(property, "D");
+                    char *readonly = property_copyAttributeValue(property, "R");
+                    if (dynamic && !readonly)
+                    {
+                        //no ivar, but setValue:forKey: will still work
+                        codableProperties[key] = propertyClass;
+                    }
+                    free(dynamic);
+                    free(readonly);
                 }
             }
         }
@@ -200,7 +218,7 @@
             [(NSMutableDictionary *)codableProperties addEntriesFromDictionary:[subclass codableProperties]];
             subclass = [subclass superclass];
         }
-        codableProperties = [NSMutableDictionary dictionaryWithDictionary:codableProperties];
+        codableProperties = [NSDictionary dictionaryWithDictionary:codableProperties];
         
         //make the association atomically so that we don't need to bother with an @synchronize
         objc_setAssociatedObject([self class], _cmd, codableProperties, OBJC_ASSOCIATION_RETAIN);
@@ -227,10 +245,10 @@
     for (NSString *key in properties)
     {
         id object = nil;
-        Class class = properties[key];
-        if (secureAvailable && secureSupported)
+        Class propertyClass = properties[key];
+        if (secureAvailable)
         {
-            object = [aDecoder decodeObjectOfClass:class forKey:key];
+            object = [aDecoder decodeObjectOfClass:propertyClass forKey:key];
         }
         else
         {
@@ -238,9 +256,9 @@
         }
         if (object)
         {
-            if (secureSupported && ![object isKindOfClass:class])
+            if (secureSupported && ![object isKindOfClass:propertyClass])
             {
-                [NSException raise:@"AutocodingException" format:@"Expected '%@' to be a %@, but was actually a %@", key, class, [object class]];
+                [NSException raise:AutocodingException format:@"Expected '%@' to be a %@, but was actually a %@", key, propertyClass, [object class]];
             }
             [self setValue:object forKey:key];
         }

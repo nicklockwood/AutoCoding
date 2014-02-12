@@ -18,6 +18,8 @@
 @property (nonatomic, readonly) NSInteger readonlyIntegerWithPrivateSetter;
 @property (nonatomic, strong) id nilProperty;
 @property (nonatomic, assign) Class classProperty;
+@property (nonatomic, assign) NSString *dynamicProperty;
+@property (nonatomic, readonly) NSString *readonlyDynamicProperty;
 
 - (void)setUpReadonlyAndPrivateData;
 - (BOOL)privateDataIsEqual:(TestObject *)object;

@@ -8,6 +8,7 @@
 
 #import "TestObject.h"
 #import "AutoCoding.h"
+#import <objc/runtime.h>
 
 
 @interface TestObject ()
@@ -23,6 +24,8 @@
 
 @synthesize readonlyIntegerWithUnsupportedIvar = _readonlyIntegerWithUnsupportedIvar123;
 @synthesize readonlyIntegerWithPrivateSetter = _readonlyIntegerWithPrivateSetter123;
+@synthesize dynamicProperty;
+@synthesize readonlyDynamicProperty;
 
 + (NSArray *)uncodableProperties
 {
@@ -35,6 +38,7 @@
     _readonlyIntegerWithPrivateSetter123 = 8;
     _privateInteger = 9;
     _privateUncodable = 5;
+    objc_setAssociatedObject(self, @selector(readonlyDynamicProperty), @"foo", OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
 - (BOOL)privateDataIsEqual:(TestObject *)object
@@ -50,6 +54,21 @@
 - (BOOL)isEqual:(id)object
 {
     return [[self dictionaryRepresentation] isEqualToDictionary:[object dictionaryRepresentation]];
+}
+
+- (NSString *)dynamicProperty
+{
+    return objc_getAssociatedObject(self, _cmd);
+}
+
+- (void)setDynamicProperty:(NSString *)prop
+{
+    objc_setAssociatedObject(self, @selector(dynamicProperty), prop, OBJC_ASSOCIATION_COPY_NONATOMIC);
+}
+
+- (NSString *)readonlyDynamicProperty
+{
+    return objc_getAssociatedObject(self, _cmd);
 }
 
 @end
