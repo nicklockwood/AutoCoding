@@ -14,6 +14,9 @@
 		0177129914BF91160050C6BC /* UnitTests.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0177129814BF91160050C6BC /* UnitTests.1 */; };
 		017712AD14BF92620050C6BC /* DataTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 017712AC14BF92620050C6BC /* DataTests.m */; };
 		017712B114BF92D00050C6BC /* TestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 017712B014BF92D00050C6BC /* TestCase.m */; };
+		7B0C6DDE19D1AD0C00CF65A6 /* AutoCoding_XCTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B0C6DDD19D1AD0C00CF65A6 /* AutoCoding_XCTests.m */; };
+		7B0C6DE219D1AD2200CF65A6 /* AutoCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 0162CF8D1606F9B90043113D /* AutoCoding.m */; };
+		7B0C6DE319D1AD2200CF65A6 /* TestObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 011EF219151BD6CE00359942 /* TestObject.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -43,6 +46,8 @@
 		017712AC14BF92620050C6BC /* DataTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataTests.m; sourceTree = "<group>"; };
 		017712AF14BF92D00050C6BC /* TestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestCase.h; path = ../UnitTests/TestCase.h; sourceTree = "<group>"; };
 		017712B014BF92D00050C6BC /* TestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestCase.m; path = ../UnitTests/TestCase.m; sourceTree = "<group>"; };
+		7B0C6DD919D1AD0C00CF65A6 /* AutoCoding XCTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AutoCoding XCTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7B0C6DDD19D1AD0C00CF65A6 /* AutoCoding_XCTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AutoCoding_XCTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +56,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				0177129214BF91160050C6BC /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7B0C6DD619D1AD0C00CF65A6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,6 +82,7 @@
 		0177128214BF91160050C6BC = {
 			isa = PBXGroup;
 			children = (
+				7B0C6DDD19D1AD0C00CF65A6 /* AutoCoding_XCTests.m */,
 				011EF214151BD08100359942 /* AutoCoding */,
 				0177129314BF91160050C6BC /* UnitTests */,
 				0177129014BF91160050C6BC /* Frameworks */,
@@ -81,6 +94,7 @@
 			isa = PBXGroup;
 			children = (
 				0177128D14BF91160050C6BC /* UnitTests */,
+				7B0C6DD919D1AD0C00CF65A6 /* AutoCoding XCTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -145,13 +159,35 @@
 			productReference = 0177128D14BF91160050C6BC /* UnitTests */;
 			productType = "com.apple.product-type.tool";
 		};
+		7B0C6DD819D1AD0C00CF65A6 /* AutoCoding XCTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7B0C6DE119D1AD0C00CF65A6 /* Build configuration list for PBXNativeTarget "AutoCoding XCTests" */;
+			buildPhases = (
+				7B0C6DD519D1AD0C00CF65A6 /* Sources */,
+				7B0C6DD619D1AD0C00CF65A6 /* Frameworks */,
+				7B0C6DD719D1AD0C00CF65A6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "AutoCoding XCTests";
+			productName = "AutoCoding XCTests";
+			productReference = 7B0C6DD919D1AD0C00CF65A6 /* AutoCoding XCTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		0177128414BF91160050C6BC /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0610;
+				TargetAttributes = {
+					7B0C6DD819D1AD0C00CF65A6 = {
+						CreatedOnToolsVersion = 6.1;
+					};
+				};
 			};
 			buildConfigurationList = 0177128714BF91160050C6BC /* Build configuration list for PBXProject "UnitTests" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -166,9 +202,20 @@
 			projectRoot = "";
 			targets = (
 				0177128C14BF91160050C6BC /* UnitTests */,
+				7B0C6DD819D1AD0C00CF65A6 /* AutoCoding XCTests */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		7B0C6DD719D1AD0C00CF65A6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		0177128914BF91160050C6BC /* Sources */ = {
@@ -183,6 +230,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		7B0C6DD519D1AD0C00CF65A6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7B0C6DE219D1AD2200CF65A6 /* AutoCoding.m in Sources */,
+				7B0C6DE319D1AD2200CF65A6 /* TestObject.m in Sources */,
+				7B0C6DDE19D1AD0C00CF65A6 /* AutoCoding_XCTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
@@ -190,13 +247,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -211,10 +272,13 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = "-Wno-unused-property-ivar";
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = macosx;
 			};
@@ -224,14 +288,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
@@ -239,9 +307,12 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				OTHER_CFLAGS = "-Wno-unused-property-ivar";
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = macosx;
 			};
@@ -273,6 +344,67 @@
 			};
 			name = Release;
 		};
+		7B0C6DDF19D1AD0C00CF65A6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		7B0C6DE019D1AD0C00CF65A6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -290,6 +422,15 @@
 			buildConfigurations = (
 				0177129D14BF91160050C6BC /* Debug */,
 				0177129E14BF91160050C6BC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7B0C6DE119D1AD0C00CF65A6 /* Build configuration list for PBXNativeTarget "AutoCoding XCTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7B0C6DDF19D1AD0C00CF65A6 /* Debug */,
+				7B0C6DE019D1AD0C00CF65A6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

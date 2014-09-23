@@ -10,34 +10,30 @@
 #import "AutoCoding.h"
 #import <objc/runtime.h>
 
-
 @interface TestObject ()
 
-@property (nonatomic, assign) NSInteger readonlyIntegerWithPrivateSetter;
-@property (nonatomic, assign) NSInteger privateInteger;
-@property (nonatomic, assign) NSInteger privateUncodable;
+@property (nonatomic) NSInteger readonlyIntegerWithPrivateSetter,
+                                privateInteger,
+                                privateUncodable;
 
 @end
 
 
 @implementation TestObject
 
-@synthesize readonlyIntegerWithUnsupportedIvar = _readonlyIntegerWithUnsupportedIvar123;
-@synthesize readonlyIntegerWithPrivateSetter = _readonlyIntegerWithPrivateSetter123;
-@synthesize dynamicProperty;
-@synthesize readonlyDynamicProperty;
-
-+ (NSArray *)uncodableProperties
-{
-    return @[@"privateUncodable", @"publicUncodable"];
-}
+@synthesize readonlyIntegerWithUnsupportedIvar = _readonlyIntegerWithUnsupportedIvar123,
+            readonlyIntegerWithPrivateSetter   = _readonlyIntegerWithPrivateSetter123,
+            privateUncodable  = _privateUncodable_uncodable,
+            publicUncodable   = _publicUncodable_uncodable,
+            dynamicProperty,
+            readonlyDynamicProperty;
 
 - (void)setUpReadonlyAndPrivateData
 {
     _readonlyIntegerWithUnsupportedIvar123 = 7;
     _readonlyIntegerWithPrivateSetter123 = 8;
     _privateInteger = 9;
-    _privateUncodable = 5;
+    _privateUncodable_uncodable = 5;
     objc_setAssociatedObject(self, @selector(readonlyDynamicProperty), @"foo", OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
@@ -48,7 +44,7 @@
 
 - (BOOL)privateUncodableIsEqual:(TestObject *)object
 {
-    return _privateUncodable == object.privateUncodable;
+    return _privateUncodable_uncodable == object.privateUncodable;
 }
 
 - (BOOL)isEqual:(id)object

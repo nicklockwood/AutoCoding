@@ -9,14 +9,14 @@
          <BuildActionEntry
             buildForTesting = "YES"
             buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "0177128C14BF91160050C6BC"
-               BuildableName = "UnitTests"
-               BlueprintName = "UnitTests"
+               BlueprintIdentifier = "7B0C6DD819D1AD0C00CF65A6"
+               BuildableName = "AutoCoding XCTests.xctest"
+               BlueprintName = "AutoCoding XCTests"
                ReferencedContainer = "container:UnitTests.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -28,13 +28,23 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       buildConfiguration = "Debug">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "7B0C6DD819D1AD0C00CF65A6"
+               BuildableName = "AutoCoding XCTests.xctest"
+               BlueprintName = "AutoCoding XCTests"
+               ReferencedContainer = "container:UnitTests.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "0177128C14BF91160050C6BC"
-            BuildableName = "UnitTests"
-            BlueprintName = "UnitTests"
+            BlueprintIdentifier = "7B0C6DD819D1AD0C00CF65A6"
+            BuildableName = "AutoCoding XCTests.xctest"
+            BlueprintName = "AutoCoding XCTests"
             ReferencedContainer = "container:UnitTests.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -48,15 +58,15 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable>
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "0177128C14BF91160050C6BC"
-            BuildableName = "UnitTests"
-            BlueprintName = "UnitTests"
+            BlueprintIdentifier = "7B0C6DD819D1AD0C00CF65A6"
+            BuildableName = "AutoCoding XCTests.xctest"
+            BlueprintName = "AutoCoding XCTests"
             ReferencedContainer = "container:UnitTests.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -66,15 +76,15 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable>
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "0177128C14BF91160050C6BC"
-            BuildableName = "UnitTests"
-            BlueprintName = "UnitTests"
+            BlueprintIdentifier = "7B0C6DD819D1AD0C00CF65A6"
+            BuildableName = "AutoCoding XCTests.xctest"
+            BlueprintName = "AutoCoding XCTests"
             ReferencedContainer = "container:UnitTests.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
