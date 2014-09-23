@@ -24,7 +24,7 @@
         if ([name hasPrefix:@"test"])
         {
             //avoid arc warning by using c runtime
-            objc_msgSend(self, selector);
+            ((void(*)(id,SEL))objc_msgSend)(self, selector);
         }
         
         NSLog(@"Test '%@' completed successfuly", [name substringFromIndex:4]);
