@@ -1,3 +1,6 @@
+![Build Status](https://travis-ci.org/nicklockwood/AutoCoding.svg)](https://travis-ci.org/nicklockwood/AutoCoding)
+
+
 Purpose
 --------------
 
