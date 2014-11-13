@@ -11,6 +11,9 @@
 #import <objc/runtime.h>
 
 
+#pragma clang diagnostic ignored "-Wdirect-ivar-access"
+
+
 @interface TestObject ()
 
 @property (nonatomic, assign) NSInteger readonlyIntegerWithPrivateSetter;
@@ -24,8 +27,8 @@
 
 @synthesize readonlyIntegerWithUnsupportedIvar = _readonlyIntegerWithUnsupportedIvar123;
 @synthesize readonlyIntegerWithPrivateSetter = _readonlyIntegerWithPrivateSetter123;
-@synthesize dynamicProperty;
-@synthesize readonlyDynamicProperty;
+@dynamic dynamicProperty;
+@dynamic readonlyDynamicProperty;
 
 + (NSArray *)uncodableProperties
 {

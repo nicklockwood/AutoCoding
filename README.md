@@ -11,7 +11,7 @@ Use of AutoCoding is by no means and all-or-nothing decision. You are free to im
 Supported OS & SDK Versions
 -----------------------------
 
-* Supported build target - iOS 7.0 / Mac OS 10.9 (Xcode 5.0, Apple LLVM compiler 5.0)
+* Supported build target - iOS 8.1 / Mac OS 10.10 (Xcode 6.1, Apple LLVM compiler 6.0)
 * Earliest supported deployment target - iOS 5.0 / Mac OS 10.7
 * Earliest compatible deployment target - iOS 4.3 / Mac OS 10.6
 
@@ -165,6 +165,10 @@ Tips
         
 Release Notes
 --------------
+
+Version 2.2.1
+
+- Added missing <Foundation/Foundation.h> import, required on Xcode 6.x
 
 Version 2.2
 

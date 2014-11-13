@@ -5,9 +5,14 @@
 //  Copyright (c) 2012 Charcoal Design. All rights reserved.
 //
 
-#import "DataTests.h"
+#import <XCTest/XCTest.h>
 #import "TestObject.h"
 #import "AutoCoding.h"
+
+
+@interface DataTests : XCTestCase
+
+@end
 
 
 @implementation DataTests
@@ -29,18 +34,18 @@
     TestObject *output = [NSKeyedUnarchiver unarchiveObjectWithData:data];
     
     //check eligible values are saved
-    NSAssert([output.publicString isEqual:input.publicString], @"Public string test failed");
-    NSAssert(output.publicInteger == input.publicInteger, @"Public integer test failed");
-    NSAssert(output.readonlyIntegerWithSupportedIvar == input.readonlyIntegerWithSupportedIvar, @"Readonly integer with KVC-compliant ivar test failed");
-    NSAssert([output privateDataIsEqual:input], @"Private integer test failed");
-    NSAssert([output.dynamicProperty isEqualToString:input.dynamicProperty], @"Dynamic string test failed");
+    XCTAssertEqualObjects(output.publicString, input.publicString);
+    XCTAssertEqual(output.publicInteger, input.publicInteger);
+    XCTAssertEqual(output.readonlyIntegerWithSupportedIvar, input.readonlyIntegerWithSupportedIvar);
+    XCTAssertEqualObjects(output, input);
+    XCTAssertEqualObjects(output.dynamicProperty, input.dynamicProperty);
     
     //check ineligible values are not saved
-    NSAssert(output.publicUncodable != input.publicUncodable, @"Public uncodable test failed");
-    NSAssert(![output privateUncodableIsEqual:input], @"Private uncodable test failed");
-    NSAssert(output.readonlyIntegerWithUnsupportedIvar != input.readonlyIntegerWithUnsupportedIvar, @"Readonly integer without KVC-compliant ivar test failed");
-    NSAssert(output.readonlyIntegerWithPrivateSetter != input.readonlyIntegerWithPrivateSetter, @"Readonly integer with private setter test failed");
-    NSAssert(![output.readonlyDynamicProperty isEqualToString:input.readonlyDynamicProperty], @"Readonly dynamic string test failed");
+    XCTAssertNotEqual(output.publicUncodable, input.publicUncodable);
+    XCTAssertFalse([output privateUncodableIsEqual:input]);
+    XCTAssertNotEqual(output.readonlyIntegerWithUnsupportedIvar, input.readonlyIntegerWithUnsupportedIvar);
+    XCTAssertNotEqual(output.readonlyIntegerWithPrivateSetter, input.readonlyIntegerWithPrivateSetter);
+    XCTAssertNotEqualObjects(output.readonlyDynamicProperty, input.readonlyDynamicProperty);
 }
 
 - (void)testSecureCoding
@@ -60,13 +65,13 @@
         [unarchiver setRequiresSecureCoding:YES];
         [unarchiver decodeObjectForKey:NSKeyedArchiveRootObjectKey];
     }
-    @catch (NSException *exception)
+    @catch (__unused NSException *exception)
     {
         didCrash = YES;
     }
     @finally
     {
-        NSAssert(didCrash, @"Decoding invalid object type failed");
+        XCTAssertTrue(didCrash);
     }
 }
 
