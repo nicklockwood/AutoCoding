@@ -50,7 +50,9 @@ Category methods
 
 The NSObject(AutoCoding) category extends NSObject with the following methods. Since this is a category, every single Cocoa object, including AppKit/UIKit objects and BaseModel instances inherit these methods.
 
-    + (NSDictionary *)codableProperties;
+```objc
++ (NSDictionary *)codableProperties;
+```
 
 This method returns an dictionary containing the names and classes of all the properties of the class that will be automatically saved, loaded and copied when the object is archived using NSKeyedArchiver/Unarchiver. The values of the dictionary represent the class used to encode each property (e.g. NSString for strings, NSNumber for numeric values or booleans, NSValue for structs, etc).
 
@@ -60,23 +62,33 @@ It is not normally necessary to override this method unless you wish to add ivar
 
 Note that this method only returns the properties defined on a particular class and not any properties that are inherited from its superclasses. You *do not* need to call `[super codableProperties]` if you override this method.
 
-    - (NSDictionary *)codableProperties;
+```objc
+- (NSDictionary *)codableProperties;
+```
     
 This method returns all the codable properties of the object, including those that are inherited from superclasses. You should not override this method - if you want to add additional properties, override the `+codableProperties` class method instead.
 
-    - (NSDictionary *)dictionaryRepresentation;
+```objc
+- (NSDictionary *)dictionaryRepresentation;
+```
 
 This method returns a dictionary of the values of all the codable properties of the object. It is equivalent to calling `dictionaryWithValuesForKeys:` with the result of `[[object codableProperties] allKeys]` as the parameter.
 
-    - (void)setWithCoder:(NSCoder *)coder;
+```objc
+- (void)setWithCoder:(NSCoder *)coder;
+```
     
 This method populates the object's properties using the provided coder object, based on the codableKeys array. This is called internally by the initWithCoder: method, but may be useful if you wish to initialise an object from a coder archive after it has already been created. You could even initialise the object by merging the results of several different archives by calling `setWithCoder:` more than once.
 
-    + (instancetype)objectWithContentsOfFile:(NSString *)path;
+```objc
++ (instancetype)objectWithContentsOfFile:(NSString *)path;
+```
     
 This attempts to load the file using the following sequence: 1) If the file is an NSCoded archive, load the root object and return it, 2) If the file is an ordinary Plist, load and return the root object, 3) Return the raw data as an NSData object. If the de-serialised object is not a subclass of the class being used to load it, an exception will be thrown (to avoid this, call the method on `NSObject` instead of a specific subclass).
     
-    - (BOOL)writeToFile:(NSString *)filePath atomically:(BOOL)useAuxiliaryFile;
+```objc
+- (BOOL)writeToFile:(NSString *)filePath atomically:(BOOL)useAuxiliaryFile;
+```
     
 This attempts to write the file to disk. This method is overridden by the equivalent methods for NSData, NSDictionary and NSArray, which save the file as a human-readable XML Plist rather than an binary NSCoded Plist archive, but the `objectWithContentsOfFile:` method will correctly de-serialise these again anyway. For any other object it will serialise the object using the NSCoding protocol and write out the file as a NSCoded binary Plist archive. Returns YES on success and NO on failure.
 
@@ -86,15 +98,17 @@ NSCopying
 
 As of version 2.1, NSCopying is no longer implemented automatically, as this caused some compatibility problems with Core Data NSManagedObjects. If you wish to implement copying, this can be done quite easily by looping over the codableProperties keys and copying those properties individually to a new instance of the object (as follows):
 
-    - (id)copyWithZone:(id)zone
+```objc
+- (id)copyWithZone:(id)zone
+{
+    id copy = [[[self class] alloc] init];
+    for (NSString *key in [self codableProperties])
     {
-        id copy = [[[self class] alloc] init];
-        for (NSString *key in [self codableProperties])
-        {
-            [copy setValue:[self valueForKey:key] forKey:key];
-        }
-        return copy;
+        [copy setValue:[self valueForKey:key] forKey:key];
     }
+    return copy;
+}
+```
     
 In order to properly support NSCopying, you should also override the `-hash` and `-isEqual:` methods for any object you intend to use with copying, so that a copied object has the same hash value and is equal to the original.
 
@@ -103,19 +117,20 @@ Tips
 --------------------------------------
 
 1. To exclude certain properties of your object from being encoded, you can do so in any of the following ways:
-
     * Only use an ivar, without declaring a matching @property.
     * Change the name of the ivar to something that is not KVC compliant (i.e. not the same as the property, or the property name with an _ prefix). You can do this using the @synthesize method, e.g. @synthesize foo = unencodableFoo;
     * Override the +codableProperties method
 
 2. If you want to perform initialisation of the class post or prior to the properties being loaded via NSCoding, override the `setWithCoder:` method and call the super-implementation before or after applying your own logic, like this:
 
-        - (void)setWithCoder:(NSCoder *)coder
-        {
-            //pre-initialisation
-            [super setWithCoder:coder];
-            //post-initialisation
-        }
+    ```objc
+    - (void)setWithCoder:(NSCoder *)coder
+    {
+        //pre-initialisation
+        [super setWithCoder:coder];
+        //post-initialisation
+    }
+    ```
 
     Note that unlike in previous versions, the `init` method is not called when using `initWithCoder:`.
 
@@ -127,43 +142,49 @@ Tips
 
 6. If you have properties of a type that doesn't support NSCoding (e.g. a struct), and you wish to code them yourself by applying a conversion function, mark the property as unecodable by changing its ivar name and override the `setWithCoder:` and `encodeWithCoder:` methods (remembering to call the super-implementations of those methods to automatically load and save the other properties of the object). Like this:
 
-        @synthesize uncodableProperty = noencode_uncodableProperty; //non-KVC-compliant name
-        
-        - (void)setWithCoder:(NSCoder *)coder
-        {
-            [super setWithCoder:coder];
-            self.uncodableProperty = DECODE_VALUE([coder decodeObjectForKey:@"uncodableProperty"]);
-        }
-        
-        - (void)encodeWithCoder:(NSCoder *)coder
-        {
-            [super encodeWithCoder:coder];
-            [coder encodeObject:ENCODE_VALUE(self.newProperty) forKey:@"uncodableProperty"];
-        }
+    ```objc
+    @synthesize uncodableProperty = noencode_uncodableProperty; //non-KVC-compliant name
+
+    - (void)setWithCoder:(NSCoder *)coder
+    {
+        [super setWithCoder:coder];
+        self.uncodableProperty = DECODE_VALUE([coder decodeObjectForKey:@"uncodableProperty"]);
+    }
+
+    - (void)encodeWithCoder:(NSCoder *)coder
+    {
+        [super encodeWithCoder:coder];
+        [coder encodeObject:ENCODE_VALUE(self.newProperty) forKey:@"uncodableProperty"];
+    }
+    ```
 
 7. If you have changed the name of a property, but want to check for the existence of the old key name for backwards compatibility, override the `setWithCoder:` method and add a check for the old property as follows:
 
-        - (void)setWithCoder:(NSCoder *)coder
-        {
-            [super setWithCoder:coder];
-            self.newProperty = [coder objectForKey:@"oldProperty"] ?: self.newProperty;
-        }
+    ```objc
+    - (void)setWithCoder:(NSCoder *)coder
+    {
+        [super setWithCoder:coder];
+        self.newProperty = [coder objectForKey:@"oldProperty"] ?: self.newProperty;
+    }
+    ```
 
 8. If you have changed the name of a property, but want to load *and save* it using the old key name for backwards compatibility, give the new property a non-KVC-compliant ivar name and override the `setWithCoder:`/`encodeWithCoder:` methods to save and load the property using the old name (remembering to call the super-implementations of those methods to automatically load and save the other properties of the object). Like this:
 
-        @synthesize newProperty = noencode_newProperty; //non-KVC-compliant name
-        
-        - (void)setWithCoder:(NSCoder *)coder
-        {
-            [super setWithCoder:coder];
-            self.newProperty = [coder objectForKey:@"oldProperty"];
-        }
-        
-        - (void)encodeWithCoder:(NSCoder *)coder
-        {
-            [super encodeWithCoder:coder];
-            [coder encodeObject:self.newProperty forKey:@"oldProperty"];
-        }
+    ```objc
+    @synthesize newProperty = noencode_newProperty; //non-KVC-compliant name
+
+    - (void)setWithCoder:(NSCoder *)coder
+    {
+        [super setWithCoder:coder];
+        self.newProperty = [coder objectForKey:@"oldProperty"];
+    }
+
+    - (void)encodeWithCoder:(NSCoder *)coder
+    {
+        [super encodeWithCoder:coder];
+        [coder encodeObject:self.newProperty forKey:@"oldProperty"];
+    }
+    ```
         
         
 Release Notes
