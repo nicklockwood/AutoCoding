@@ -55,8 +55,8 @@ NS_ASSUME_NONNULL_BEGIN
  * ivars for coding that do not have matching property definitions, or if you
  * wish to code virtual properties (properties or setter/getter method pairs that
  * are not backed by an ivar). If you wish to exclude certain properties from the
- * serialisation process, you can return them in the `uncodableProperties` method
- * and they will be automatically removed from this dictionary.
+ * serialisation process, you can deliberately give them an non KVC-compliant
+ * ivar name (see above).
  *
  * Note that this method only returns the properties defined on a particular
  * class and not any properties that are inherited from its superclasses. You
