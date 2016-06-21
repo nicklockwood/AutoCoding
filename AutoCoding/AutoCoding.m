@@ -248,7 +248,7 @@ static NSString *const AutocodingException = @"AutocodingException";
         }
         if (object)
         {
-            if (secureSupported && ![object isKindOfClass:propertyClass])
+            if (secureSupported && ![object isKindOfClass:propertyClass] && object != [NSNull null])
             {
                 [NSException raise:AutocodingException format:@"Expected '%@' to be a %@, but was actually a %@", key, propertyClass, [object class]];
             }

@@ -9,7 +9,6 @@
 #import "TestObject.h"
 #import "AutoCoding.h"
 
-
 @interface DataTests : XCTestCase
 
 @end
@@ -46,6 +45,18 @@
     XCTAssertNotEqual(output.readonlyIntegerWithUnsupportedIvar, input.readonlyIntegerWithUnsupportedIvar);
     XCTAssertNotEqual(output.readonlyIntegerWithPrivateSetter, input.readonlyIntegerWithPrivateSetter);
     XCTAssertNotEqualObjects(output.readonlyDynamicProperty, input.readonlyDynamicProperty);
+}
+
+- (void)testNullObjectRetention {
+    TestObject *input = [[TestObject alloc] init];
+    [input setValue:[NSNull null] forKey:@"publicString"];
+    //save object
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:input];
+
+    //load object
+    TestObject *output = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    XCTAssertEqualObjects(output.publicString, [NSNull null]);
+
 }
 
 - (void)testSecureCoding
