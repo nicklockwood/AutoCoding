@@ -56,7 +56,11 @@
 
 - (BOOL)isEqual:(id)object
 {
-    return [[self dictionaryRepresentation] isEqualToDictionary:[object dictionaryRepresentation]];
+    if (object_getClass(object) != [self class])
+    {
+        return NO;
+    }
+    return [[self dictionaryRepresentation] isEqualToDictionary:[(NSObject *)object dictionaryRepresentation]];
 }
 
 - (NSString *)dynamicProperty

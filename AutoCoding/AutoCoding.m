@@ -1,7 +1,7 @@
 //
 //  AutoCoding.m
 //
-//  Version 2.2.1
+//  Version 2.2.2
 //
 //  Created by Nick Lockwood on 19/11/2011.
 //  Copyright (c) 2011 Charcoal Design
@@ -34,7 +34,9 @@
 #import <objc/runtime.h>
 
 
-#pragma GCC diagnostic ignored "-Wgnu"
+#pragma clang diagnostic ignored "-Wgnu"
+#pragma clang diagnostic ignored "-Wpartial-availability"
+#pragma clang diagnostic ignored "-Wobjc-designated-initializers"
 
 
 static NSString *const AutocodingException = @"AutocodingException";
@@ -63,7 +65,7 @@ static NSString *const AutocodingException = @"AutocodingException";
 		if (object)
 		{
 			//check if object is an NSCoded unarchive
-			if ([object respondsToSelector:@selector(objectForKey:)] && [(NSDictionary *)object objectForKey:@"$archiver"])
+			if ([object respondsToSelector:@selector(objectForKeyedSubscript:)] && ((NSDictionary *)object)[@"$archiver"])
 			{
 				object = [NSKeyedUnarchiver unarchiveObjectWithData:data];
 			}
@@ -90,20 +92,10 @@ static NSString *const AutocodingException = @"AutocodingException";
     return [data writeToFile:filePath atomically:useAuxiliaryFile];
 }
 
-+ (NSDictionary *)codableProperties
++ (NSDictionary<NSString *, Class> *)codableProperties
 {
     //deprecated
-    SEL deprecatedSelector = NSSelectorFromString(@"codableKeys");
-    if ([self respondsToSelector:deprecatedSelector] || [self instancesRespondToSelector:deprecatedSelector])
-    {
-        NSLog(@"AutoCoding Warning: codableKeys method is no longer supported. Use codableProperties instead.");
-    }
-    deprecatedSelector = NSSelectorFromString(@"uncodableKeys");
-    if ([self respondsToSelector:deprecatedSelector] || [self instancesRespondToSelector:deprecatedSelector])
-    {
-        NSLog(@"AutoCoding Warning: uncodableKeys method is no longer supported. Use ivars, or synthesize your properties using non-KVC-compliant names to avoid coding them instead.");
-    }
-    deprecatedSelector = NSSelectorFromString(@"uncodableProperties");
+    SEL deprecatedSelector = NSSelectorFromString(@"uncodableProperties");
     NSArray *uncodableProperties = nil;
     if ([self respondsToSelector:deprecatedSelector] || [self instancesRespondToSelector:deprecatedSelector])
     {
@@ -206,7 +198,7 @@ static NSString *const AutocodingException = @"AutocodingException";
     return codableProperties;
 }
 
-- (NSDictionary *)codableProperties
+- (NSDictionary<NSString *, Class> *)codableProperties
 {
     __autoreleasing NSDictionary *codableProperties = objc_getAssociatedObject([self class], _cmd);
     if (!codableProperties)
@@ -226,10 +218,10 @@ static NSString *const AutocodingException = @"AutocodingException";
     return codableProperties;
 }
 
-- (NSDictionary *)dictionaryRepresentation
+- (NSDictionary<NSString *, id> *)dictionaryRepresentation
 {
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    for (__unsafe_unretained NSString *key in [self codableProperties])
+    for (__unsafe_unretained NSString *key in self.codableProperties)
     {
         id value = [self valueForKey:key];
         if (value) dict[key] = value;
@@ -241,7 +233,7 @@ static NSString *const AutocodingException = @"AutocodingException";
 {
     BOOL secureAvailable = [aDecoder respondsToSelector:@selector(decodeObjectOfClass:forKey:)];
     BOOL secureSupported = [[self class] supportsSecureCoding];
-    NSDictionary *properties = [self codableProperties];
+    NSDictionary *properties = self.codableProperties;
     for (NSString *key in properties)
     {
         id object = nil;
@@ -273,7 +265,7 @@ static NSString *const AutocodingException = @"AutocodingException";
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
-    for (NSString *key in [self codableProperties])
+    for (NSString *key in self.codableProperties)
     {
         id object = [self valueForKey:key];
         if (object) [aCoder encodeObject:object forKey:key];

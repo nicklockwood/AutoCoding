@@ -1,7 +1,7 @@
 //
 //  AutoCoding.h
 //
-//  Version 2.2.1
+//  Version 2.2.2
 //
 //  Created by Nick Lockwood on 19/11/2011.
 //  Copyright (c) 2011 Charcoal Design
@@ -32,17 +32,19 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface NSObject (AutoCoding) <NSSecureCoding>
 
 //coding
 
-+ (NSDictionary *)codableProperties;
++ (NSDictionary<NSString *, Class> *)codableProperties;
 - (void)setWithCoder:(NSCoder *)aDecoder;
 
 //property access
 
-- (NSDictionary *)codableProperties;
-- (NSDictionary *)dictionaryRepresentation;
+@property (nonatomic, readonly) NSDictionary<NSString *, Class> *codableProperties;
+@property (nonatomic, readonly) NSDictionary<NSString *, id> *dictionaryRepresentation;
 
 //loading / saving
 
@@ -50,3 +52,5 @@
 - (BOOL)writeToFile:(NSString *)filePath atomically:(BOOL)useAuxiliaryFile;
 
 @end
+
+NS_ASSUME_NONNULL_END

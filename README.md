@@ -14,8 +14,8 @@ Use of AutoCoding is by no means and all-or-nothing decision. You are free to im
 Supported OS & SDK Versions
 -----------------------------
 
-* Supported build target - iOS 8.1 / Mac OS 10.10 (Xcode 6.1, Apple LLVM compiler 6.0)
-* Earliest supported deployment target - iOS 5.0 / Mac OS 10.7
+* Supported build target - iOS 9.3 / Mac OS 10.11 (Xcode 7.3, Apple LLVM compiler 7.1)
+* Earliest supported deployment target - iOS 7.0 / Mac OS 10.10
 * Earliest compatible deployment target - iOS 4.3 / Mac OS 10.6
 
 NOTE: 'Supported' means that the library has been tested with this version. 'Compatible' means that the library should work on this OS version (i.e. it doesn't rely on any unavailable SDK features) but is no longer being tested for compatibility and may require tweaking or bug fixes to run correctly.
@@ -45,12 +45,12 @@ Security
 As of version 2.0, AutoCoding supports the NSSecureCoding protocol automatically, and returns YES for the `+supportsSecureCoding` method for all objects by default. In addition to this, assuming you do not override `+supportsSecureCoding` to return NO, AutoCoding will automatically throw an exception when attempting to decode a class whose type doesn't match the property it is being assigned to. This makes it much harder for a malicious party to craft an NSCoded  file that, when loaded by your app, will cause it to execute code that you didn't intend it to.
 
 
-Category methods
+Category methods & properties
 -----------------------------
 
 The NSObject(AutoCoding) category extends NSObject with the following methods. Since this is a category, every single Cocoa object, including AppKit/UIKit objects and BaseModel instances inherit these methods.
 
-    + (NSDictionary *)codableProperties;
+    + (NSDictionary<NSString *, Class> *)codableProperties;
 
 This method returns an dictionary containing the names and classes of all the properties of the class that will be automatically saved, loaded and copied when the object is archived using NSKeyedArchiver/Unarchiver. The values of the dictionary represent the class used to encode each property (e.g. NSString for strings, NSNumber for numeric values or booleans, NSValue for structs, etc).
 
@@ -60,11 +60,11 @@ It is not normally necessary to override this method unless you wish to add ivar
 
 Note that this method only returns the properties defined on a particular class and not any properties that are inherited from its superclasses. You *do not* need to call `[super codableProperties]` if you override this method.
 
-    - (NSDictionary *)codableProperties;
+    @property (nonatomic, readonly) NSDictionary<NSString *, Class> *codableProperties;
     
 This method returns all the codable properties of the object, including those that are inherited from superclasses. You should not override this method - if you want to add additional properties, override the `+codableProperties` class method instead.
 
-    - (NSDictionary *)dictionaryRepresentation;
+    @property (nonatomic, readonly) NSDictionary<NSString *, id> *dictionaryRepresentation;
 
 This method returns a dictionary of the values of all the codable properties of the object. It is equivalent to calling `dictionaryWithValuesForKeys:` with the result of `[[object codableProperties] allKeys]` as the parameter.
 
@@ -89,7 +89,7 @@ As of version 2.1, NSCopying is no longer implemented automatically, as this cau
     - (id)copyWithZone:(id)zone
     {
         id copy = [[[self class] alloc] init];
-        for (NSString *key in [self codableProperties])
+        for (NSString *key in self.codableProperties)
         {
             [copy setValue:[self valueForKey:key] forKey:key];
         }
@@ -168,6 +168,11 @@ Tips
         
 Release Notes
 --------------
+ 
+Version 2.2.2
+ 
+- Fixed warnings on latest Xcode
+- Added nullability and lightweight generics
 
 Version 2.2.1
 
