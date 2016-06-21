@@ -47,9 +47,11 @@
     XCTAssertNotEqualObjects(output.readonlyDynamicProperty, input.readonlyDynamicProperty);
 }
 
-- (void)testNullObjectRetention {
+- (void)testNullObjectRetention
+{
     TestObject *input = [[TestObject alloc] init];
     [input setValue:[NSNull null] forKey:@"publicString"];
+
     //save object
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:input];
 

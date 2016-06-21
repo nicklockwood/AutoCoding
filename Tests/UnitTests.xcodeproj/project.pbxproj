@@ -253,6 +253,7 @@
 					"-Wno-documentation-unknown-command",
 					"-Wno-reserved-id-macro",
 					"-Wno-partial-availability",
+					"-Wno-unknown-warning-option",
 				);
 			};
 			name = Debug;
@@ -327,6 +328,7 @@
 					"-Wno-documentation-unknown-command",
 					"-Wno-reserved-id-macro",
 					"-Wno-partial-availability",
+					"-Wno-unknown-warning-option",
 				);
 			};
 			name = Release;
