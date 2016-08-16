@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C143DEEC1D631061000345FC"
+               BlueprintIdentifier = "C143DF001D631398000345FC"
                BuildableName = "AutoCoding.framework"
-               BlueprintName = "AutoCoding iOS"
+               BlueprintName = "AutoCoding Watch"
                ReferencedContainer = "container:AutoCoding.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,9 +45,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C143DEEC1D631061000345FC"
+            BlueprintIdentifier = "C143DF001D631398000345FC"
             BuildableName = "AutoCoding.framework"
-            BlueprintName = "AutoCoding iOS"
+            BlueprintName = "AutoCoding Watch"
             ReferencedContainer = "container:AutoCoding.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -63,9 +63,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C143DEEC1D631061000345FC"
+            BlueprintIdentifier = "C143DF001D631398000345FC"
             BuildableName = "AutoCoding.framework"
-            BlueprintName = "AutoCoding iOS"
+            BlueprintName = "AutoCoding Watch"
             ReferencedContainer = "container:AutoCoding.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
