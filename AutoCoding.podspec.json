@@ -1,13 +1,13 @@
 {
   "name": "AutoCoding",
-  "version": "2.2.2",
+  "version": "2.2.3",
   "summary": "AutoCoding is a category on NSObject that provides automatic support for NSCoding to any object.",
   "homepage": "https://github.com/nicklockwood/AutoCoding",
   "license": "zlib",
   "authors": "Nick Lockwood",
   "source": {
     "git": "https://github.com/nicklockwood/AutoCoding.git",
-    "tag": "2.2.2"
+    "tag": "2.2.3"
   },
   "platforms": {
     "ios": "4.3",
