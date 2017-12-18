@@ -263,12 +263,14 @@ static NSString *const AutocodingException = @"AutocodingException";
     return self;
 }
 
+#define IS_OBJECT(x) ( strchr("@#", @encode(__typeof__(x))[0]) != NULL )
+
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
     for (NSString *key in self.codableProperties)
     {
         id object = [self valueForKey:key];
-        if (object) [aCoder encodeObject:object forKey:key];
+        if (object && IS_OBJECT(object)) [aCoder encodeObject:object forKey:key];
     }
 }
 
